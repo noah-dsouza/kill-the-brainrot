@@ -11,6 +11,7 @@ from bad_guys.feet import Feet
 from bad_guys.sahur import Sahur
 
 pygame.init()
+pygame.mixer.init()
 
 # Screen
 SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
@@ -38,6 +39,20 @@ game_active = False
 score = 0
 game_time = 120  
 start_ticks = None
+
+# Sounds
+try:
+    smack_sound = pygame.mixer.Sound("smack.mp3")
+    smack_sound.set_volume(0.5)
+except Exception as e:
+    print("Could not load smack.mp3:", e)
+    smack_sound = None
+
+try:
+    pygame.mixer.music.load("sigma.mp3")
+    pygame.mixer.music.set_volume(0.4)
+except Exception as e:
+    print("Could not load sigma.mp3:", e)
 
 # Hand controller
 hand = HandController()
@@ -77,6 +92,7 @@ def draw_start_screen():
 try:
     while running:
         if not game_active:
+            pygame.mixer.music.stop()
             draw_start_screen()
             start_click = False
             for event in pygame.event.get():
@@ -95,6 +111,11 @@ try:
                 start_ticks = pygame.time.get_ticks()
                 score = 0
                 good_guys, bad_guys = spawn_entities()
+                
+                try:
+                    pygame.mixer.music.play(-1)
+                except:
+                    pass
 
         else:
             mouse_clicked = False
@@ -116,6 +137,8 @@ try:
             time_left = max(0, int(game_time - elapsed))
             if time_left <= 0:
                 game_active = False
+
+                pygame.mixer.music.stop()
                 continue
 
             # Fist
@@ -143,16 +166,24 @@ try:
 
             # Collisions 
             if mouse_clicked:
+                hit_anything = False
                 for bad in list(bad_guys):
                     if fist_rect.colliderect(bad.rect):
                         score += 3
                         bad_guys.remove(bad)
                         bad_guys.append(random.choice([Banana(), Coffee(), Feet(), Sahur()]))
+                        hit_anything = True
+
                 for good in list(good_guys):
                     if fist_rect.colliderect(good.rect):
                         score -= 1
                         good_guys.remove(good)
                         good_guys.append(random.choice([Orange(), Chungus(), Ugandan()]))
+                        hit_anything = True
+                        
+                if hit_anything and smack_sound:
+                    smack_sound.play()
+
 
             # Draw fist 
             SCREEN.blit(fist_img, fist_rect)
