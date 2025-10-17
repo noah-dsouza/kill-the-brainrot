@@ -9,3 +9,5 @@ __pycache__/
 *.mov
 *.log
 
+venv/
+venv311/
