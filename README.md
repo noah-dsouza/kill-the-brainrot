@@ -30,10 +30,19 @@ but don’t destroy the *true* OG brainrot icons. Keep the legacy alive.
 Clone the repo and install the dependencies:
 
 ```bash
+# Clone the repository
 git clone https://github.com/noah-dsouza/kill-the-brainrot.git
 cd kill-the-brainrot
-python3 -m venv venv
-source venv/bin/activate  # macOS/Linux
-venv\Scripts\activate     # Windows
 
+# Create a virtual environment
+python3 -m venv venv
+
+# Activate it
+source venv/bin/activate     # macOS/Linux
+venv\Scripts\activate        # Windows
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the game
+python3 test_game_display.py
