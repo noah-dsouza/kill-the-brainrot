@@ -21,7 +21,7 @@ but don’t destroy the *true* OG brainrot icons. Keep the legacy alive.
 - 🐍 **Python 3.11**
 - 🎮 **Pygame** – for graphics, sound, and chaos
 - 👋 **OpenCV + MediaPipe** – for real-time hand tracking
-- 🎵 **Custom sound effects** – `sigma.mp3` (background) + `smack.mp3` (hit SFX)
+- 🎵 **Custom sound effects** 
 
 ---
 
