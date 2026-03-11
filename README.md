@@ -43,6 +43,7 @@ venv\Scripts\activate        # Windows
 
 # Install dependencies
 pip install pygame
+pip install opencv-python mediapipe
 
 # Run the game
 python3 test_game_display.py
