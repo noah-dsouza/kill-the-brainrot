@@ -42,7 +42,7 @@ source venv/bin/activate     # macOS/Linux
 venv\Scripts\activate        # Windows
 
 # Install dependencies
-pip install -r requirements.txt
+pip install pygame
 
 # Run the game
 python3 test_game_display.py
