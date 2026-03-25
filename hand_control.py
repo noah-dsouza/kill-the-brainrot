@@ -4,21 +4,16 @@ import mediapipe as mp
 import time
 import numpy as np
 
-# Use these specific sub-modules to avoid the AttributeError on Mac
-import mediapipe.python.solutions.hands as mp_hands
-import mediapipe.python.solutions.drawing_utils as mp_drawing
-import mediapipe.python.solutions.drawing_styles as mp_styles
-
 class HandController:
     def __init__(self, cam_index=0):
         self.cam_index = cam_index
         self.running = False
         self.cap = None
 
-        # Link the sub-modules directly
-        self._mp_hands = mp_hands
-        self._mp_draw = mp_drawing
-        self._mp_styles = mp_styles
+        # Use the solutions directly as seen in your hand_test.py
+        self._mp_hands = mp.solutions.hands
+        self._mp_draw = mp.solutions.drawing_utils
+        self._mp_styles = mp.solutions.drawing_styles
         
         self._hands = self._mp_hands.Hands(
             static_image_mode=False,
