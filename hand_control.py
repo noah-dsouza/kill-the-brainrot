@@ -4,10 +4,15 @@ import mediapipe as mp
 import time
 import numpy as np
 
-# DIRECT PATH IMPORTS FOR MAC/PYTHON 3.12
-from mediapipe.python.solutions import hands as mp_hands
-from mediapipe.python.solutions import drawing_utils as mp_drawing
-from mediapipe.python.solutions import drawing_styles as mp_styles
+# DIRECT PATH IMPORTS (This is the magic for your Mac)
+try:
+    from mediapipe.python.solutions import hands as mp_hands
+    from mediapipe.python.solutions import drawing_utils as mp_drawing
+    from mediapipe.python.solutions import drawing_styles as mp_styles
+except ImportError:
+    import mediapipe.solutions.hands as mp_hands
+    import mediapipe.solutions.drawing_utils as mp_drawing
+    import mediapipe.solutions.drawing_styles as mp_styles
 
 class HandController:
     def __init__(self, cam_index=0):
@@ -15,7 +20,7 @@ class HandController:
         self.running = False
         self.cap = None
 
-        # Use the direct imports defined above
+        # Pointing directly to the imported modules
         self._mp_hands = mp_hands
         self._mp_draw = mp_drawing
         self._mp_styles = mp_styles
@@ -37,7 +42,7 @@ class HandController:
         if not self.cap.isOpened():
             raise RuntimeError("Camera not accessible.")
         self.running = True
-        print("Hand tracking started (Mac Direct Path Mode)")
+        print("Hand tracking started (Mac Fix Active)")
 
     def update(self):
         if not self.running: return None, self.x, self.y, False
