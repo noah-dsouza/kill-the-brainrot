@@ -1,18 +1,17 @@
 # hand_control.py
 import cv2
-import mediapipe as mp
 import time
 import numpy as np
 
-# DIRECT PATH IMPORTS (This is the magic for your Mac)
+# MediaPipe imports — try the legacy path first, then the newer path
 try:
-    from mediapipe.python.solutions import hands as mp_hands
-    from mediapipe.python.solutions import drawing_utils as mp_drawing
-    from mediapipe.python.solutions import drawing_styles as mp_styles
-except ImportError:
     import mediapipe.solutions.hands as mp_hands
     import mediapipe.solutions.drawing_utils as mp_drawing
     import mediapipe.solutions.drawing_styles as mp_styles
+except (ImportError, AttributeError):
+    from mediapipe.python.solutions import hands as mp_hands
+    from mediapipe.python.solutions import drawing_utils as mp_drawing
+    from mediapipe.python.solutions import drawing_styles as mp_styles
 
 class HandController:
     def __init__(self, cam_index=0):
