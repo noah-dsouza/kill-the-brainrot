@@ -8,8 +8,4 @@ __pycache__/
 *.mp4
 *.mov
 *.log
-
-venv/
-venv311/
-venv/
-venv311/
+*.task
