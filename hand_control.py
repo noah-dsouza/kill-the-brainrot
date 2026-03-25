@@ -4,7 +4,7 @@ import mediapipe as mp
 import time
 import numpy as np
 
-# DIRECT PATH IMPORTS (The "Mac Fix")
+# DIRECT PATH IMPORTS FOR MAC/PYTHON 3.12
 from mediapipe.python.solutions import hands as mp_hands
 from mediapipe.python.solutions import drawing_utils as mp_drawing
 from mediapipe.python.solutions import drawing_styles as mp_styles
@@ -15,6 +15,7 @@ class HandController:
         self.running = False
         self.cap = None
 
+        # Use the direct imports defined above
         self._mp_hands = mp_hands
         self._mp_draw = mp_drawing
         self._mp_styles = mp_styles
@@ -36,6 +37,7 @@ class HandController:
         if not self.cap.isOpened():
             raise RuntimeError("Camera not accessible.")
         self.running = True
+        print("Hand tracking started (Mac Direct Path Mode)")
 
     def update(self):
         if not self.running: return None, self.x, self.y, False
