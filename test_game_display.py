@@ -55,9 +55,11 @@ except Exception as e:
     print("Could not load sigma.mp3:", e)
 
 # Hand controller
-hand = HandController()
+hand = None
 try:
+    hand = HandController()
     hand.start()
+    print("Camera + hand tracking OK")
 except Exception as e:
     print("Hand control failed:", e)
     hand = None

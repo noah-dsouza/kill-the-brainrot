@@ -57,11 +57,21 @@ class HandController:
         self.prev_fist = False
 
     def start(self):
-        self.cap = cv2.VideoCapture(self.cam_index)
-        if not self.cap.isOpened():
-            raise RuntimeError("Camera not accessible.")
-        self.running = True
-        print("Hand tracking started")
+        # Try the requested index first, then fallback alternatives
+        for idx in [self.cam_index, 1, -1]:
+            cap = cv2.VideoCapture(idx)
+            if cap.isOpened():
+                ret, frame = cap.read()
+                if ret and frame is not None:
+                    self.cap = cap
+                    self.running = True
+                    print(f"Hand tracking started (camera index {idx})")
+                    return
+            cap.release()
+        raise RuntimeError(
+            "Camera not accessible. On macOS, grant camera permission to Terminal "
+            "in System Settings > Privacy & Security > Camera."
+        )
 
     def update(self):
         if not self.running:
