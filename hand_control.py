@@ -1,12 +1,13 @@
 # hand_control.py
 import cv2
 import mediapipe as mp
-# Direct imports to fix the 'AttributeError: module mediapipe has no attribute solutions'
-from mediapipe.python.solutions import hands as mp_hands
-from mediapipe.python.solutions import drawing_utils as mp_drawing
-from mediapipe.python.solutions import drawing_styles as mp_styles
 import time
 import numpy as np
+
+# Use these specific sub-modules to avoid the AttributeError on Mac
+import mediapipe.python.solutions.hands as mp_hands
+import mediapipe.python.solutions.drawing_utils as mp_drawing
+import mediapipe.python.solutions.drawing_styles as mp_styles
 
 class HandController:
     def __init__(self, cam_index=0):
@@ -14,7 +15,7 @@ class HandController:
         self.running = False
         self.cap = None
 
-        # Link the direct imports to the class variables
+        # Link the sub-modules directly
         self._mp_hands = mp_hands
         self._mp_draw = mp_drawing
         self._mp_styles = mp_styles
@@ -64,7 +65,7 @@ class HandController:
                 self._mp_styles.get_default_hand_connections_style()
             )
 
-            # Wrist position for movement tracking
+            # Wrist position
             self.x = hand_landmarks.landmark[0].x
             self.y = hand_landmarks.landmark[0].y
 
